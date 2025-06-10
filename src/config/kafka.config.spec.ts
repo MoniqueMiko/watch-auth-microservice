@@ -19,7 +19,7 @@ describe('kafkaConfig', () => {
   });
 
   it('deve ter broker como localhost:9092', () => {
-    const options = kafkaConfig.options as any; // cast para evitar erro de tipagem
+    const options = kafkaConfig.options as any;
     expect(options.client.brokers).toContain('localhost:9092');
   });
 

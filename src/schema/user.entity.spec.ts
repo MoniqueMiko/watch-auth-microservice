@@ -38,7 +38,6 @@ describe('User Entity', () => {
     user2.email = 'repetido@email.com';
 
     expect(user1.email).toBe(user2.email);
-    // Simulação da regra de negócio no service:
     const existingEmails = [user1.email];
     const isDuplicate = existingEmails.includes(user2.email);
     expect(isDuplicate).toBe(true);
