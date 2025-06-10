@@ -25,7 +25,7 @@ export class AuthService {
     const hashed = await bcrypt.hash(data.password, 10);
 
     const userExist = await this._user.findOne({ where: { email: data.email }, });
-    if (userExist) return await this._httpExceptionStrategy.responseHelper(500, 'Email already exists');
+    if (userExist) return await this._httpExceptionStrategy.responseHelper(500, 'Email já existe');
 
     const user = this._user.create({ email: data.email, password: hashed, fullName: data.fullName });
     await this._user.save(user);
@@ -38,10 +38,10 @@ export class AuthService {
     if (validate?.status === 400) return await this._httpExceptionStrategy.responseHelper(400, validate.message,);
 
     const user = await this._user.findOne({ where: { email: data.email } });
-    if (!user || user === null || user === undefined) return await this._httpExceptionStrategy.responseHelper(401, 'Email not found');
+    if (!user || user === null || user === undefined) return await this._httpExceptionStrategy.responseHelper(401, 'Email não encontrado');
 
     const valid = await bcrypt.compare(data.password, user.password);
-    if (!valid) return await this._httpExceptionStrategy.responseHelper(401, 'Invalid password',);
+    if (!valid) return await this._httpExceptionStrategy.responseHelper(401, 'Senha Inválida',);
 
     const jwt = await this.generateJwt(user.id, user.email)
     
