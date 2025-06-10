@@ -25,13 +25,12 @@ import { CreateUserDto, LoginUserDto } from './dto/auth.dto';
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
-        host: config.get('POSTGRES_HOST'),
-        port: config.get<number>('POSTGRES_PORT'),
-        username: config.get('POSTGRES_USER'),
-        password: config.get('POSTGRES_PASSWORD'),
-        database: config.get('POSTGRES_DB'),
+        url: config.get('DATABASE_URL'),
         entities: [User],
         synchronize: true,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
       inject: [ConfigService],
     }),
